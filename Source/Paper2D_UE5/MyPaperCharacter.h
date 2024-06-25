@@ -3,9 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "PaperCharacter.h"
+#include "PaperFlipbook.h"
+#include "PaperCharacter.h" // paper2D
 #include "InputActionValue.h"
-#include "InputMappingContext.h"
+
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
+
 #include "MyPaperCharacter.generated.h"
 
 /**
@@ -22,20 +26,21 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
-
-public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
-private:
+public:
 	//이동 Input 이벤트
 	void Move(const FInputActionValue& Value);
 
 	//공격 Input 이벤트
 	void Attack(const FInputActionValue& Value);
+	void OnAttackFinished();
 
+	void UpdateAnimation();
+
+private:
 
 	// Input Actions
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))
@@ -44,9 +49,26 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> IA_Attack;
 
-	// Input Mapping Context
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UInputMappingContext> IMC_SideScroller;
-	                                       
+	// Flipbook Animations
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UPaperFlipbook> FB_Char_Idle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UPaperFlipbook> FB_Char_Run;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UPaperFlipbook> FB_Char_Attack01;
+
+
+	// Movement state
+	bool bIsAttacking;
+	FVector2D MovementInput;
+
+	// 카메라와 Spring Arm Components 를  추가함.
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class USpringArmComponent> SpringArm;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UCameraComponent> Camera;
 	
 };
