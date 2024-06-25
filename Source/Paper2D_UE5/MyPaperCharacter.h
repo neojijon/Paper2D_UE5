@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "PaperCharacter.h"
-#include "EnhancedInputComponent.h"
 #include "InputActionValue.h"
 #include "InputMappingContext.h"
 #include "MyPaperCharacter.generated.h"
