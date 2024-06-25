@@ -63,6 +63,7 @@ void AMyPaperCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+    bIsAttacking = false;
     GetSprite()->SetFlipbook(FB_Char_Idle);
     
     //GetSprite 이벤트 함수 등록
@@ -140,12 +141,8 @@ void AMyPaperCharacter::OnAttackFinished()
 
 void AMyPaperCharacter::UpdateAnimation()
 {
-    if (bIsAttacking)
-    {
-        return;
-    }
-    else
-    {
+    if (!bIsAttacking)
+    {        
         if (MovementInput.SizeSquared() > 0.0f)
         {
             GetSprite()->SetFlipbook(FB_Char_Run);
