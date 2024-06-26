@@ -8,15 +8,15 @@
 
 AMyGameModeBase::AMyGameModeBase()
 {
-	// set default pawn class to our Blueprinted character
-	//static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Script/Paper2D_UE5.MyPaperCharacter"));
-	/*static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/Paper2D/Character/BP_Char"));
+	// 블루프린터 클래스를 디폴트 Pawn 클래스로 세팅하는 방법
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/Paper2D/BP_Character"));	
 		
 	if (PlayerPawnBPClass.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
-	}*/
+	}
 
-	DefaultPawnClass = AMyPaperCharacter::StaticClass();
+	//일반 C++ 클래스를  세팅하는 방법
+	//DefaultPawnClass = AMyPaperCharacter::StaticClass();
 	PlayerControllerClass = AMyPlayerController::StaticClass();
 }
