@@ -41,7 +41,7 @@ AMyPaperCharacter::AMyPaperCharacter()
     SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
     SpringArm->SetupAttachment(RootComponent);
     SpringArm->TargetArmLength = 500.0f;
-    SpringArm->SetRelativeRotation(FRotator(-10.0f, -90.0f, 0.0f)); //횡스크롤 화면 
+    SpringArm->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f)); //횡스크롤 화면 
     //SpringArm->SetWorldRotation(FRotator(0.0f, 0.0f, -90.0f));
     SpringArm->bDoCollisionTest = false;
     SpringArm->bInheritPitch = false;
@@ -65,9 +65,12 @@ void AMyPaperCharacter::BeginPlay()
 
     bIsAttacking = false;
     GetSprite()->SetFlipbook(FB_Char_Idle);
-    
-    //GetSprite 이벤트 함수 등록
-    GetSprite()->OnFinishedPlaying.AddDynamic(this, &AMyPaperCharacter::OnAttackFinished);
+
+    if (GetSprite())
+    {
+        //GetSprite 이벤트 함수 등록
+        GetSprite()->OnFinishedPlaying.AddDynamic(this, &AMyPaperCharacter::OnAttackFinished);
+    }
 }
 
 
@@ -97,10 +100,14 @@ void AMyPaperCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AMyPaperCharacter::Move(const FInputActionValue& Value)
 {
-    FVector2D MovementVector = Value.Get<FVector2D>();
-    AddMovementInput(FVector(MovementVector.X, 0.0f, 0.0f));
+    if(!bIsAttacking)
+    {
+        //케릭터 움직임
+        FVector2D MovementVector = Value.Get<FVector2D>();
+        AddMovementInput(FVector(MovementVector.X, 0.0f, 0.0f));
 
-    UE_LOG(LogTemp, Warning, TEXT("EnhancedInputComponent"));
+        UE_LOG(LogTemp, Warning, TEXT("EnhancedInputComponent"));
+    }    
 }
 
 void AMyPaperCharacter::Attack(const FInputActionValue& Value)

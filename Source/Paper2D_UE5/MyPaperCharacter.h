@@ -36,6 +36,8 @@ public:
 
 	//공격 Input 이벤트
 	void Attack(const FInputActionValue& Value);
+
+	UFUNCTION()
 	void OnAttackFinished();
 
 	void UpdateAnimation();
