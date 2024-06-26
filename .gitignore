@@ -74,3 +74,6 @@ Plugins/*/Intermediate/*
 DerivedDataCache/*
 /Content/__ExternalActors__/ThirdPerson/Maps/ThirdPersonMap/5/WP
 /Content/__ExternalActors__/ThirdPerson/Maps/ThirdPersonMap/7/R6
+/Intermediate
+/Saved
+/Binaries
