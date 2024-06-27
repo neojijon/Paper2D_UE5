@@ -27,7 +27,9 @@ protected:
 
 public:
     void Move(const FInputActionValue& Value);
-    void Attack(const FInputActionValue& Value);
+    void Walk(const FInputActionValue& Value);
+	void Attack(const FInputActionValue& Value);
+	//void Jump(const FInputActionValue& Value);
 
 private:
 	// Input Actions
@@ -35,7 +37,13 @@ private:
 	TObjectPtr<class UInputAction> IA_Move;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> IA_Walk;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> IA_Attack;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> IA_Jump;
 
 	// Input Mapping Context
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))

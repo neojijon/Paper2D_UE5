@@ -3,14 +3,26 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "PaperFlipbook.h"
+//#include "InputActionValue.h"
 #include "PaperCharacter.h" // paper2D
-#include "InputActionValue.h"
+//#include "PaperFlipbook.h"
 
-#include "GameFramework/SpringArmComponent.h"
-#include "Camera/CameraComponent.h"
+//#include "Camera/CameraComponent.h"
+//#include "GameFramework/SpringArmComponent.h"
+
+//#include "GameFramework/CharacterMovementComponent.h"
 
 #include "MyPaperCharacter.generated.h"
+
+class UPaperFlipbook;
+class USpringArmComponent;
+class UCameraComponent;
+class UCharacterMovementComponent;
+class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
+
+
 
 /**
  * 
@@ -27,15 +39,18 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	virtual void Jump() override;
+	virtual void StopJumping() override;
 
 
 public:
-	//이동 Input 이벤트
-	void Move(const FInputActionValue& Value);
+	void Walk(const FInputActionValue& Value);
 
 	//공격 Input 이벤트
 	void Attack(const FInputActionValue& Value);
+
+	
 
 	UFUNCTION()
 	void OnAttackFinished();
@@ -49,6 +64,10 @@ private:
 	// Flipbook Animations
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UPaperFlipbook> FB_Char_Idle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UPaperFlipbook> FB_Char_Walk;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UPaperFlipbook> FB_Char_Run;
@@ -67,5 +86,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCameraComponent> Camera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Character Movement", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UCharacterMovementComponent> Movement;
 	
 };

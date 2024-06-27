@@ -3,20 +3,24 @@
 
 #include "MyPaperCharacter.h"
 
+
+#include "Engine/LocalPlayer.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/Controller.h"
+
 #include "PaperFlipbookComponent.h"
 #include "EnhancedInputComponent.h"
 
-#include "UObject/ConstructorHelpers.h"
-
-//#include "GameFramework/SpringArmComponent.h"
-//#include "Camera/CameraComponent.h"
+#include "MyPlayerController.h"
 
 
 
 AMyPaperCharacter::AMyPaperCharacter()
 {
-	PrimaryActorTick.bCanEverTick = true;
-
+	
     //카메라, 스프링암 컴퍼넌트를 값 세팅
     // Spring Arm Component
     SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
@@ -33,9 +37,19 @@ AMyPaperCharacter::AMyPaperCharacter()
     Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("SideViewCamera"));
     Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
     Camera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+
+    //점프관련 수치 초기화
+        // Configure character movement
+    GetCharacterMovement()->GravityScale = 2.0f;
+    GetCharacterMovement()->AirControl = 0.80f;
+    GetCharacterMovement()->JumpZVelocity = 1000.f;
+    GetCharacterMovement()->GroundFriction = 3.0f;
+    GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+    GetCharacterMovement()->MaxFlySpeed = 600.0f;
     
 
     bIsAttacking = false;
+    PrimaryActorTick.bCanEverTick = true;
 }
 
 
@@ -69,26 +83,27 @@ void AMyPaperCharacter::Tick(float DeltaTime)
 
 
 
-
-
-void AMyPaperCharacter::Move(const FInputActionValue& Value)
+void AMyPaperCharacter::Walk(const FInputActionValue& Value)
 {
-    if(!bIsAttacking)
-    {
-        //케릭터 움직임
-        FVector2D MovementVector = Value.Get<FVector2D>();
-        AddMovementInput(FVector(1, 0.0f, 0.0f), MovementVector.X);
+    UE_LOG(LogTemp, Warning, TEXT("Walk!"));
+}
 
 
-        if (MovementVector.X < 0)
-        {
-            const FRotator YawRotation(0, 180, 0);
-        }
-        else if (MovementVector.X > 0)
-        {
-            const FRotator YawRotation(0, 0, 0);
-        }
-    }    
+void AMyPaperCharacter::Jump()
+{
+    Super::Jump();
+
+    GetSprite()->SetFlipbook(FB_Char_Attack01);
+    UE_LOG(LogTemp, Warning, TEXT("Jump!"));
+}
+
+
+void AMyPaperCharacter::StopJumping()
+{
+    Super::Jump();
+
+    GetSprite()->SetFlipbook(FB_Char_Attack01);
+    UE_LOG(LogTemp, Warning, TEXT("StopJumping!"));
 }
 
 void AMyPaperCharacter::Attack(const FInputActionValue& Value)
@@ -100,13 +115,6 @@ void AMyPaperCharacter::Attack(const FInputActionValue& Value)
         GetSprite()->SetFlipbook(FB_Char_Attack01);
         GetSprite()->SetLooping(false);        
         GetSprite()->PlayFromStart();
-
-        /*GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
-        {
-            bIsAttacking = false;
-        });*/
-
-        UE_LOG(LogTemp, Warning, TEXT("Attack!"));
     }
 }
 
@@ -120,10 +128,6 @@ void AMyPaperCharacter::OnAttackFinished()
     GetSprite()->Play();
     UpdateAnimation();
 
-   /* GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
-    {
-        bIsAttacking = false;
-    });*/
 }
 
 
@@ -134,19 +138,37 @@ void AMyPaperCharacter::UpdateCharacter()
     // Update animation to match the motion
     UpdateAnimation();
 
-    // Now setup the rotation of the controller based on the direction we are travelling
-    const FVector PlayerVelocity = GetVelocity();
-    float TravelDirection = PlayerVelocity.X;
-    // Set the rotation so that the character faces his direction of travel.
-    if (Controller != nullptr)
+
+    if (!bIsAttacking)
     {
-        if (TravelDirection < 0.0f)
+        UE_LOG(LogTemp, Warning, TEXT("UpdateCharacter!"));
+
+
+        const FVector PlayerVelocity = GetActorForwardVector();
+        float TravelDirection = PlayerVelocity.X;
+
+        if (Controller != nullptr)
         {
-            Controller->SetControlRotation(FRotator(0.0, 180.0f, 0.0f));
-        }
-        else if (TravelDirection > 0.0f)
-        {
-            Controller->SetControlRotation(FRotator(0.0f, 0.0f, 0.0f));
+
+            AMyPlayerController* MyController = Cast<AMyPlayerController>(Controller);
+
+            if (MyController != nullptr)
+            {
+                if (TravelDirection < 0.0f)
+                {
+                    MyController->SetControlRotation(FRotator(0.0, 180.0f, 0.0f));
+
+                    UE_LOG(LogTemp, Warning, TEXT("SetControlRotation!"));
+                }
+                else if (TravelDirection > 0.0f)
+                {
+                    MyController->SetControlRotation(FRotator(0.0f, 0.0f, 0.0f));
+
+                    UE_LOG(LogTemp, Warning, TEXT("SetControlRotation!"));
+                }
+
+            }
+
         }
     }
 }

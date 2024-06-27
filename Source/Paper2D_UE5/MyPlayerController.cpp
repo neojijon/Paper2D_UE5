@@ -10,7 +10,7 @@
 
 AMyPlayerController::AMyPlayerController()
 {
-    PrimaryActorTick.bCanEverTick = true;
+    //PrimaryActorTick.bCanEverTick = true;
 
     ////인풋관련 초기 세팅
     // Input Actions
@@ -43,18 +43,24 @@ void AMyPlayerController::SetupInputComponent()
     if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent))
     {
         EnhancedInputComponent->BindAction(IA_Move.Get(), ETriggerEvent::Triggered, this, &AMyPlayerController::Move);
+        EnhancedInputComponent->BindAction(IA_Walk.Get(), ETriggerEvent::Triggered, this, &AMyPlayerController::Walk);        
         EnhancedInputComponent->BindAction(IA_Attack.Get(), ETriggerEvent::Triggered, this, &AMyPlayerController::Attack);
+        //EnhancedInputComponent->BindAction(IA_Jump.Get(), ETriggerEvent::Triggered, this, &AMyPlayerController::Jump);
     }
 }
 
 void AMyPlayerController::Move(const FInputActionValue& Value)
 {
-   /* if (APawn* ControlledPawn = GetPawn())
+    if (APawn* ControlledPawn = GetPawn())
     {
         FVector2D MovementVector = Value.Get<FVector2D>();
-        ControlledPawn->AddMovementInput(FVector(MovementVector.X, 0.0f, 0.0f));
-    }*/
+        ControlledPawn->AddMovementInput(FVector(1.0f, 0.0f, 0.0f), MovementVector.X);
 
+        //UE_LOG(LogTemp, Warning, TEXT("MovementVector: %f"), MovementVector.X);        
+    }
+
+
+    /*
     if (APawn* ControlledPawn = GetPawn())
     {
         if (AMyPaperCharacter* MyCharacter = Cast<AMyPaperCharacter>(ControlledPawn))
@@ -62,7 +68,34 @@ void AMyPlayerController::Move(const FInputActionValue& Value)
             MyCharacter->Move(Value);
         }
     }
+    */
 }
+
+void AMyPlayerController::Walk(const FInputActionValue& Value)
+{
+    /*if (APawn* ControlledPawn = GetPawn())
+    {
+        if (AMyPaperCharacter* MyCharacter = Cast<AMyPaperCharacter>(ControlledPawn))
+        {
+            MyCharacter->Walk(Value);
+        }
+    }*/
+
+    UE_LOG(LogTemp, Warning, TEXT("Walk"));
+}
+
+//
+//void AMyPlayerController::Jump(const FInputActionValue& Value)
+//{
+//    if (APawn* ControlledPawn = GetPawn())
+//    {
+//        if (AMyPaperCharacter* MyCharacter = Cast<AMyPaperCharacter>(ControlledPawn))
+//        {
+//            MyCharacter->Jump();
+//        }
+//    }
+//}
+
 
 void AMyPlayerController::Attack(const FInputActionValue& Value)
 {
@@ -70,7 +103,7 @@ void AMyPlayerController::Attack(const FInputActionValue& Value)
     {
         if (AMyPaperCharacter* MyCharacter = Cast<AMyPaperCharacter>(ControlledPawn))
         {
-            MyCharacter->Attack(Value);
+            MyCharacter->Attack(Value);            
         }
     }
 }

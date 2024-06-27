@@ -9,9 +9,10 @@
 AMyGameModeBase::AMyGameModeBase()
 {
 	// 블루프린터 클래스를 디폴트 Pawn 클래스로 세팅하는 방법
+		
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/Paper2D/BP_Character"));	
 		
-	if (PlayerPawnBPClass.Class != NULL)
+	if (PlayerPawnBPClass.Class != nullptr)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
@@ -19,7 +20,7 @@ AMyGameModeBase::AMyGameModeBase()
 		
 	static ConstructorHelpers::FClassFinder<APlayerController> ControllClass(TEXT("/Game/Paper2D/BP_MyPlayerController"));
 
-	if (ControllClass.Class != NULL)
+	if (ControllClass.Class != nullptr)
 	{
 		PlayerControllerClass = ControllClass.Class;
 	}
