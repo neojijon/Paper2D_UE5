@@ -12,17 +12,17 @@ AMyPlayerController::AMyPlayerController()
 {
     PrimaryActorTick.bCanEverTick = true;
 
-    //인풋관련 초기 세팅
+    ////인풋관련 초기 세팅
     // Input Actions
-    static ConstructorHelpers::FObjectFinder<UInputAction> IA_Move_OBJ(TEXT("/Game/Paper2D/Input/Actions/IA_Move"));
-    IA_Move = IA_Move_OBJ.Object;
+    //static ConstructorHelpers::FObjectFinder<UInputAction> IA_Move_OBJ(TEXT("/Game/Paper2D/Input/Actions/IA_Move"));
+    //IA_Move = IA_Move_OBJ.Object;
 
-    static ConstructorHelpers::FObjectFinder<UInputAction> IA_Attack_OBJ(TEXT("/Game/Paper2D/Input/Actions/IA_Attack"));
-    IA_Attack = IA_Attack_OBJ.Object;
+    //static ConstructorHelpers::FObjectFinder<UInputAction> IA_Attack_OBJ(TEXT("/Game/Paper2D/Input/Actions/IA_Attack"));
+    //IA_Attack = IA_Attack_OBJ.Object;
 
-    // Input Mapping Context
-    static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_SideScroller_OBJ(TEXT("/Game/Paper2D/Input/IMC_SideScroller"));
-    IMC_SideScroller = IMC_SideScroller_OBJ.Object;
+    //// Input Mapping Context
+    //static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_SideScroller_OBJ(TEXT("/Game/Paper2D/Input/IMC_SideScroller"));
+    //IMC_SideScroller = IMC_SideScroller_OBJ.Object;
 
 }
 

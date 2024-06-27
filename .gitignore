@@ -78,3 +78,5 @@ DerivedDataCache/*
 /Saved
 /Binaries
 /Content/__ExternalActors__/ThirdPerson/Maps/ThirdPersonMap/D/HG
+/Source/Paper2D_UE5/MyPaperCharacter2D.cpp
+/Source/Paper2D_UE5/MyPaperCharacter2D.h

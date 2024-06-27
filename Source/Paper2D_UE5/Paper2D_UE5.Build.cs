@@ -9,7 +9,7 @@ public class Paper2D_UE5 : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Paper2D", "EnhancedInput" , "UMG"  });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Paper2D", "EnhancedInput" , "UMG" , "NavigationSystem", "AIModule", "Niagara" });
 
 		//PrivateDependencyModuleNames.AddRange(new string[] {  });
 

@@ -40,8 +40,8 @@ AMyPaperCharacter::AMyPaperCharacter()
     // Spring Arm Component
     SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
     SpringArm->SetupAttachment(RootComponent);
-    SpringArm->TargetArmLength = 500.0f;
-    SpringArm->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f)); //È¾½ºÅ©·Ñ È­¸é 
+    SpringArm->TargetArmLength = 300.0f;
+    SpringArm->SetRelativeRotation(FRotator(-10.0f, -90.0f, 0.0f)); //È¾½ºÅ©·Ñ È­¸é 
     //SpringArm->SetWorldRotation(FRotator(0.0f, 0.0f, -90.0f));
     SpringArm->bDoCollisionTest = false;
     SpringArm->bInheritPitch = false;
