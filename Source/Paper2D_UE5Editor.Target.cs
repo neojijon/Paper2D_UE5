@@ -9,7 +9,9 @@ public class Paper2D_UE5EditorTarget : TargetRules
 	{
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V5;
+		//최신버젼을 빌드
+        IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 
-		ExtraModuleNames.AddRange( new string[] { "Paper2D_UE5" } );
+        ExtraModuleNames.AddRange( new string[] { "Paper2D_UE5" } );
 	}
 }

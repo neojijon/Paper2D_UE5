@@ -9,7 +9,8 @@ public class Paper2D_UE5Target : TargetRules
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V5;
+        IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 
-		ExtraModuleNames.AddRange( new string[] { "Paper2D_UE5" } );
+        ExtraModuleNames.AddRange( new string[] { "Paper2D_UE5" } );
 	}
 }
