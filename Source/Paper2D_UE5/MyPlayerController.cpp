@@ -58,7 +58,7 @@ void AMyPlayerController::Move(const FInputActionValue& Value)
     if (APawn* ControlledPawn = GetPawn())
     {
         if (AMyPaperCharacter* MyCharacter = Cast<AMyPaperCharacter>(ControlledPawn))
-        {
+        {            
             MyCharacter->Move(Value);
         }
     }
@@ -74,3 +74,4 @@ void AMyPlayerController::Attack(const FInputActionValue& Value)
         }
     }
 }
+

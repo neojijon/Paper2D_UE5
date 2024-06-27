@@ -17,25 +17,6 @@ AMyPaperCharacter::AMyPaperCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-    //인풋관련 초기 세팅
-    // Input Actions
-    static ConstructorHelpers::FObjectFinder<UInputAction> IA_Move_OBJ(TEXT("/Game/Paper2D/Input/Actions/IA_Move"));
-    IA_Move = IA_Move_OBJ.Object;
-
-    static ConstructorHelpers::FObjectFinder<UInputAction> IA_Attack_OBJ(TEXT("/Game/Paper2D/Input/Actions/IA_Attack"));
-    IA_Attack = IA_Attack_OBJ.Object;
-
-    //애니메이션 초기 세팅
-    // Flipbook Animations
-    static ConstructorHelpers::FObjectFinder<UPaperFlipbook> FB_Idle_OBJ(TEXT("/Game/Paper2D/Character/FB_Char_Idle"));
-    FB_Char_Idle = FB_Idle_OBJ.Object;
-
-    static ConstructorHelpers::FObjectFinder<UPaperFlipbook> FB_Run_OBJ(TEXT("/Game/Paper2D/Character/FB_Char_Run"));
-    FB_Char_Run = FB_Run_OBJ.Object;
-
-    static ConstructorHelpers::FObjectFinder<UPaperFlipbook> FB_Attack01_OBJ(TEXT("/Game/Paper2D/Character/FB_Char_Attack01"));
-    FB_Char_Attack01 = FB_Attack01_OBJ.Object;
-
     //카메라, 스프링암 컴퍼넌트를 값 세팅
     // Spring Arm Component
     SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
@@ -63,13 +44,15 @@ void AMyPaperCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-    bIsAttacking = false;
-    GetSprite()->SetFlipbook(FB_Char_Idle);
+    bIsAttacking = false;    
 
-    if (GetSprite())
+    if (GetSprite() != nullptr)
     {
+        GetSprite()->SetFlipbook(FB_Char_Idle);
         //GetSprite 이벤트 함수 등록
         GetSprite()->OnFinishedPlaying.AddDynamic(this, &AMyPaperCharacter::OnAttackFinished);
+
+        UE_LOG(LogTemp, Warning, TEXT("OnFinishedPlaying.AddDynamic"));
     }
 }
 
@@ -79,23 +62,13 @@ void AMyPaperCharacter::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 
     //추가 구현하면 됨.
-    UpdateAnimation();
+    UpdateCharacter();
 
 }
 
 
 
-void AMyPaperCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-    if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
-    {
-        EnhancedInputComponent->BindAction(IA_Move.Get(), ETriggerEvent::Triggered, this, &AMyPaperCharacter::Move);
-        EnhancedInputComponent->BindAction(IA_Attack.Get(), ETriggerEvent::Triggered, this, &AMyPaperCharacter::Attack);
-    }
-
-}
 
 
 void AMyPaperCharacter::Move(const FInputActionValue& Value)
@@ -104,9 +77,17 @@ void AMyPaperCharacter::Move(const FInputActionValue& Value)
     {
         //케릭터 움직임
         FVector2D MovementVector = Value.Get<FVector2D>();
-        AddMovementInput(FVector(MovementVector.X, 0.0f, 0.0f));
+        AddMovementInput(FVector(1, 0.0f, 0.0f), MovementVector.X);
 
-        UE_LOG(LogTemp, Warning, TEXT("EnhancedInputComponent"));
+
+        if (MovementVector.X < 0)
+        {
+            const FRotator YawRotation(0, 180, 0);
+        }
+        else if (MovementVector.X > 0)
+        {
+            const FRotator YawRotation(0, 0, 0);
+        }
     }    
 }
 
@@ -146,18 +127,46 @@ void AMyPaperCharacter::OnAttackFinished()
 }
 
 
+
+
+void AMyPaperCharacter::UpdateCharacter()
+{
+    // Update animation to match the motion
+    UpdateAnimation();
+
+    // Now setup the rotation of the controller based on the direction we are travelling
+    const FVector PlayerVelocity = GetVelocity();
+    float TravelDirection = PlayerVelocity.X;
+    // Set the rotation so that the character faces his direction of travel.
+    if (Controller != nullptr)
+    {
+        if (TravelDirection < 0.0f)
+        {
+            Controller->SetControlRotation(FRotator(0.0, 180.0f, 0.0f));
+        }
+        else if (TravelDirection > 0.0f)
+        {
+            Controller->SetControlRotation(FRotator(0.0f, 0.0f, 0.0f));
+        }
+    }
+}
+
+
+
 void AMyPaperCharacter::UpdateAnimation()
 {
     if (!bIsAttacking)
-    {        
-        if (MovementInput.SizeSquared() > 0.0f)
+    {
+        const FVector PlayerVelocity = GetVelocity();
+        const float PlayerSpeedSqr = PlayerVelocity.SizeSquared();
+
+        // Are we moving or standing still?
+        UPaperFlipbook* DesiredAnimation = (PlayerSpeedSqr > 0.0f) ? FB_Char_Run : FB_Char_Idle;
+        if (GetSprite()->GetFlipbook() != DesiredAnimation)
         {
-            GetSprite()->SetFlipbook(FB_Char_Run);
+            GetSprite()->SetFlipbook(DesiredAnimation);
         }
-        else
-        {
-            GetSprite()->SetFlipbook(FB_Char_Idle);
-        }
+
     }
     
 }

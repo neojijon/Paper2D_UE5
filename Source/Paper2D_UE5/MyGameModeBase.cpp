@@ -16,7 +16,15 @@ AMyGameModeBase::AMyGameModeBase()
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
 
+		
+	static ConstructorHelpers::FClassFinder<APlayerController> ControllClass(TEXT("/Game/Paper2D/BP_MyPlayerController"));
+
+	if (ControllClass.Class != NULL)
+	{
+		PlayerControllerClass = ControllClass.Class;
+	}
+
 	//일반 C++ 클래스를  세팅하는 방법
 	//DefaultPawnClass = AMyPaperCharacter::StaticClass();
-	PlayerControllerClass = AMyPlayerController::StaticClass();
+	//PlayerControllerClass = AMyPlayerController::StaticClass();
 }

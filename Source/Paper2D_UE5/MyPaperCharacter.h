@@ -27,7 +27,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
 public:
@@ -40,16 +40,11 @@ public:
 	UFUNCTION()
 	void OnAttackFinished();
 
+	void UpdateCharacter();
+
 	void UpdateAnimation();
 
 private:
-
-	// Input Actions
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UInputAction> IA_Move;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UInputAction> IA_Attack;
 
 	// Flipbook Animations
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
