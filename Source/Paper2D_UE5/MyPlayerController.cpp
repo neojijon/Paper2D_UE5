@@ -3,7 +3,14 @@
 
 #include "MyPlayerController.h"
 #include "MyPaperCharacter.h"
-#include "UObject/ConstructorHelpers.h"
+#include "MyPaperCharacter_ZD.h"
+
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "InputActionValue.h"
+#include "InputMappingContext.h"
+
+//#include "UObject/ConstructorHelpers.h"
 
 
 
@@ -51,16 +58,23 @@ void AMyPlayerController::SetupInputComponent()
 
 void AMyPlayerController::Move(const FInputActionValue& Value)
 {
+   
     if (APawn* ControlledPawn = GetPawn())
     {
         FVector2D MovementVector = Value.Get<FVector2D>();
-        ControlledPawn->AddMovementInput(FVector(1.0f, 0.0f, 0.0f), MovementVector.X);
+        
+        if (AMyPaperCharacter* MyCharacter = Cast<AMyPaperCharacter>(ControlledPawn))
+        {
+            MyCharacter->Move(MovementVector.X);
+        }
+        else if (AMyPaperCharacter_ZD* MyCharacter_ZD = Cast<AMyPaperCharacter_ZD>(ControlledPawn))
+        {
+            MyCharacter_ZD->Move(MovementVector.X);
+        }
+    }  
 
-        //UE_LOG(LogTemp, Warning, TEXT("MovementVector: %f"), MovementVector.X);        
-    }
 
-
-    /*
+   /*
     if (APawn* ControlledPawn = GetPawn())
     {
         if (AMyPaperCharacter* MyCharacter = Cast<AMyPaperCharacter>(ControlledPawn))
@@ -103,7 +117,11 @@ void AMyPlayerController::Attack(const FInputActionValue& Value)
     {
         if (AMyPaperCharacter* MyCharacter = Cast<AMyPaperCharacter>(ControlledPawn))
         {
-            MyCharacter->Attack(Value);            
+            MyCharacter->Attack();            
+        }
+        else if (AMyPaperCharacter_ZD* MyCharacter_ZD = Cast<AMyPaperCharacter_ZD>(ControlledPawn))
+        {
+            MyCharacter_ZD->Attack();
         }
     }
 }

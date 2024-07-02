@@ -21,13 +21,15 @@ class UCharacterMovementComponent;
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class UPaperZDAnimationComponent;
 
 
 
 /**
  * 
  */
-UCLASS()
+
+UCLASS(Blueprintable, BlueprintType)
 class PAPER2D_UE5_API AMyPaperCharacter : public APaperCharacter
 {
 	GENERATED_BODY()
@@ -45,10 +47,11 @@ protected:
 
 
 public:
+	void Move(float Value);
 	void Walk(const FInputActionValue& Value);
 
 	//공격 Input 이벤트
-	void Attack(const FInputActionValue& Value);
+	void Attack();
 
 	
 
@@ -89,5 +92,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Character Movement", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCharacterMovementComponent> Movement;
-	
+
+	// Add PaperZD
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PaperZD", meta = (AllowPrivateAccess = "true"))
+	//UPaperZDAnimationComponent* AnimationComponent;
+	TObjectPtr<class UPaperZDAnimationComponent> AnimationComponent;
+
 };

@@ -1,3 +1,4 @@
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
@@ -12,7 +13,7 @@
 #include "GameFramework/Controller.h"
 
 #include "PaperFlipbookComponent.h"
-#include "EnhancedInputComponent.h"
+#include "PaperZDAnimationComponent.h"
 
 #include "MyPlayerController.h"
 
@@ -20,6 +21,19 @@
 
 AMyPaperCharacter::AMyPaperCharacter()
 {
+
+    AnimationComponent = CreateDefaultSubobject<UPaperZDAnimationComponent>(TEXT("Animation"));
+
+    if (AnimationComponent)
+    {
+        AddInstanceComponent(AnimationComponent.Get());
+        AnimationComponent.Get()->RegisterComponent();
+    }
+
+    //AnimationComponent = CreateDefaultSubobject<UPaperZDAnimationComponent>(TEXT("Animation"));
+    //AnimationComponent->InitRenderComponent(GetSprite());
+
+
 	
     //카메라, 스프링암 컴퍼넌트를 값 세팅
     // Spring Arm Component
@@ -106,7 +120,12 @@ void AMyPaperCharacter::StopJumping()
     UE_LOG(LogTemp, Warning, TEXT("StopJumping!"));
 }
 
-void AMyPaperCharacter::Attack(const FInputActionValue& Value)
+void AMyPaperCharacter::Move(float Value)
+{   
+    AddMovementInput(FVector(1.0f, 0.0f, 0.0f), Value);
+}
+
+void AMyPaperCharacter::Attack()
 {
     // 공격 로직을 여기에 구현
     if (!bIsAttacking)

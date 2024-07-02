@@ -4,16 +4,25 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+/*
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "InputMappingContext.h"
+*/
 #include "MyPlayerController.generated.h"
+
+class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
+//template <typename T> struct TObjectPtr;
+
+
 
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable, BlueprintType)
 class PAPER2D_UE5_API AMyPlayerController : public APlayerController
 {
 	GENERATED_BODY()
