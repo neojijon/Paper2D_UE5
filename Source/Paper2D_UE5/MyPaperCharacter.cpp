@@ -90,7 +90,7 @@ void AMyPaperCharacter::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 
     //추가 구현하면 됨.
-    UpdateCharacter();
+    //UpdateCharacter();
 
 }
 
@@ -114,7 +114,7 @@ void AMyPaperCharacter::Jump()
 
 void AMyPaperCharacter::StopJumping()
 {
-    Super::Jump();
+    Super::StopJumping();
 
     GetSprite()->SetFlipbook(FB_Char_Attack01);
     UE_LOG(LogTemp, Warning, TEXT("StopJumping!"));
@@ -123,6 +123,7 @@ void AMyPaperCharacter::StopJumping()
 void AMyPaperCharacter::Move(float Value)
 {   
     AddMovementInput(FVector(1.0f, 0.0f, 0.0f), Value);
+    UpdateCharacter();
 }
 
 void AMyPaperCharacter::Attack()

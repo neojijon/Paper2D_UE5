@@ -4,19 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-/*
-#include "EnhancedInputComponent.h"
-#include "EnhancedInputSubsystems.h"
-#include "InputActionValue.h"
-#include "InputMappingContext.h"
-*/
+
 #include "MyPlayerController.generated.h"
 
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
-//template <typename T> struct TObjectPtr;
-
 
 
 /**
@@ -57,6 +50,10 @@ private:
 	// Input Mapping Context
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputMappingContext> IMC_SideScroller;
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<class UCharacterSelectWidget> CharacterSelectWidgetClass;
 
 	
 };

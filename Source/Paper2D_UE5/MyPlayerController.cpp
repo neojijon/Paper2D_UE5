@@ -10,6 +10,8 @@
 #include "InputActionValue.h"
 #include "InputMappingContext.h"
 
+#include "CharacterSelectWidget.h"
+
 //#include "UObject/ConstructorHelpers.h"
 
 
@@ -36,11 +38,27 @@ AMyPlayerController::AMyPlayerController()
 void AMyPlayerController::BeginPlay()
 {
     Super::BeginPlay();
+    
 
     if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
     {
         Subsystem->AddMappingContext(IMC_SideScroller.Get(), 1);
     }
+
+
+    if (CharacterSelectWidgetClass)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("CharacterSelectWidgetClass"));
+
+        UUserWidget* CharacterSelectWidget = CreateWidget<UUserWidget>(this, CharacterSelectWidgetClass);
+        if (CharacterSelectWidget)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("AddToViewport"));
+
+            CharacterSelectWidget->AddToViewport();
+        }
+    }
+
 }
 
 void AMyPlayerController::SetupInputComponent()

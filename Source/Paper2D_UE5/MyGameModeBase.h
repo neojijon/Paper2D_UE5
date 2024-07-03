@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "MyGameModeBase.generated.h"
 
+
+class AMyPaperCharacter_ZD;
 /**
  * 
  */
@@ -16,5 +18,15 @@ class PAPER2D_UE5_API AMyGameModeBase : public AGameModeBase
 
 public:
 	AMyGameModeBase();
+
+public:
+	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintCallable, Category = "Character")
+	void SetPlayerCharacter(TSubclassOf<AMyPaperCharacter_ZD> NewCharacterClass);
+
+
+private:
+	TSubclassOf<AMyPaperCharacter_ZD> SelectedCharacterClass;
 	
 };

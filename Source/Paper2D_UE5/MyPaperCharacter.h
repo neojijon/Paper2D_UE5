@@ -14,13 +14,15 @@
 
 #include "MyPaperCharacter.generated.h"
 
-class UPaperFlipbook;
+
 class USpringArmComponent;
 class UCameraComponent;
-class UCharacterMovementComponent;
-class UInputMappingContext;
-class UInputAction;
+
+//class UInputMappingContext;
+//class UInputAction;
 struct FInputActionValue;
+
+class UPaperFlipbook;
 class UPaperZDAnimationComponent;
 
 
@@ -90,8 +92,8 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCameraComponent> Camera;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Character Movement", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UCharacterMovementComponent> Movement;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Character Movement", meta = (AllowPrivateAccess = "true"))
+	//TObjectPtr<class UCharacterMovementComponent> Movement;
 
 	// Add PaperZD
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PaperZD", meta = (AllowPrivateAccess = "true"))

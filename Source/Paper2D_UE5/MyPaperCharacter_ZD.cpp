@@ -98,7 +98,7 @@ void AMyPaperCharacter_ZD::Jump()
 
 void AMyPaperCharacter_ZD::StopJumping()
 {
-    Super::Jump();
+    Super::StopJumping();
     UE_LOG(LogTemp, Warning, TEXT("StopJumping!"));
 }
 
@@ -126,13 +126,13 @@ void AMyPaperCharacter_ZD::TurnRight(float value)
     {
         GetController()->SetControlRotation(FRotator(0.0, 180.0f, 0.0f));
 
-        UE_LOG(LogTemp, Warning, TEXT("SetControlRotation!"));
+        //UE_LOG(LogTemp, Warning, TEXT("SetControlRotation!"));
     }
     else if (TravelDirection > 0.0f)
     {
         GetController()->SetControlRotation(FRotator(0.0f, 0.0f, 0.0f));
 
-        UE_LOG(LogTemp, Warning, TEXT("SetControlRotation!"));
+        //UE_LOG(LogTemp, Warning, TEXT("SetControlRotation!"));
     }
 }
 
