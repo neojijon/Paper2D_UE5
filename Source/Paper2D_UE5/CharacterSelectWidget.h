@@ -7,6 +7,8 @@
 #include "CharacterSelectWidget.generated.h"
 
 
+class UCharacterSlotWidget;
+
 /**
  * 
  */
@@ -15,7 +17,17 @@ class PAPER2D_UE5_API UCharacterSelectWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-public:
+public:    
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character")
+    TObjectPtr<UCharacterSlotWidget> Slot1;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character")
+    TObjectPtr<UCharacterSlotWidget> Slot2;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character")
+    TObjectPtr<UCharacterSlotWidget> Slot3;
+
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character")
     TSubclassOf<ACharacter> CharacterClass1;
