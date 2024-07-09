@@ -56,14 +56,14 @@ private:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
-	TSubclassOf<class UCharacterSelectWidget> CharacterSelectWidgetClass;
+	TSubclassOf<class UUserWidget> CharacterSelectWidgetClass;
 
 	UFUNCTION()
 	void ToggleCharacterSelectWidget();
 
 private:
 	UPROPERTY()	
-	UCharacterSelectWidget* CharacterSelectWidgetInstance;
+	UUserWidget* CharacterSelectWidgetInstance;
 
 	//마우스 커서 Show/HIde
 	void ShowMouseCursor(bool bShow);

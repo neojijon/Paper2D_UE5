@@ -12,26 +12,9 @@
 
 #include "CharacterSelectWidget.h"
 
-//#include "UObject/ConstructorHelpers.h"
-
-
-
 
 AMyPlayerController::AMyPlayerController()
 {
-    //PrimaryActorTick.bCanEverTick = true;
-
-    ////인풋관련 초기 세팅
-    // Input Actions
-    //static ConstructorHelpers::FObjectFinder<UInputAction> IA_Move_OBJ(TEXT("/Game/Paper2D/Input/Actions/IA_Move"));
-    //IA_Move = IA_Move_OBJ.Object;
-
-    //static ConstructorHelpers::FObjectFinder<UInputAction> IA_Attack_OBJ(TEXT("/Game/Paper2D/Input/Actions/IA_Attack"));
-    //IA_Attack = IA_Attack_OBJ.Object;
-
-    //// Input Mapping Context
-    //static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_SideScroller_OBJ(TEXT("/Game/Paper2D/Input/IMC_SideScroller"));
-    //IMC_SideScroller = IMC_SideScroller_OBJ.Object;
 
 }
 
@@ -50,7 +33,7 @@ void AMyPlayerController::BeginPlay()
     {
         UE_LOG(LogTemp, Warning, TEXT("CharacterSelectWidgetClass"));
 
-        CharacterSelectWidgetInstance = CreateWidget<UCharacterSelectWidget>(this, CharacterSelectWidgetClass);
+        CharacterSelectWidgetInstance = CreateWidget<UUserWidget>(this, CharacterSelectWidgetClass);
         if (CharacterSelectWidgetInstance)
         {
             UE_LOG(LogTemp, Warning, TEXT("AddToViewport"));
@@ -124,19 +107,19 @@ void AMyPlayerController::ShowMouseCursor(bool bShow)
 void AMyPlayerController::Move(const FInputActionValue& Value)
 {
    
-    if (APawn* ControlledPawn = GetPawn())
-    {
-        FVector2D MovementVector = Value.Get<FVector2D>();
-        
-        if (AMyPaperCharacter* MyCharacter = Cast<AMyPaperCharacter>(ControlledPawn))
-        {
-            MyCharacter->Move(MovementVector.X);
-        }
-        else if (AMyPaperCharacter_ZD* MyCharacter_ZD = Cast<AMyPaperCharacter_ZD>(ControlledPawn))
-        {
-            MyCharacter_ZD->Move(MovementVector.X);
-        }
-    }
+    //if (APawn* ControlledPawn = GetPawn())
+    //{
+    //    FVector2D MovementVector = Value.Get<FVector2D>();
+    //    
+    //    if (AMyPaperCharacter* MyCharacter = Cast<AMyPaperCharacter>(ControlledPawn))
+    //    {
+    //        MyCharacter->Move(MovementVector.X);
+    //    }
+    //    else if (AMyPaperCharacter_ZD* MyCharacter_ZD = Cast<AMyPaperCharacter_ZD>(ControlledPawn))
+    //    {
+    //        MyCharacter_ZD->Move(MovementVector.X);
+    //    }
+    //}
 }
 
 void AMyPlayerController::Walk(const FInputActionValue& Value)
@@ -167,7 +150,7 @@ void AMyPlayerController::Walk(const FInputActionValue& Value)
 
 void AMyPlayerController::Attack(const FInputActionValue& Value)
 {
-    if (APawn* ControlledPawn = GetPawn())
+   /* if (APawn* ControlledPawn = GetPawn())
     {
         if (AMyPaperCharacter* MyCharacter = Cast<AMyPaperCharacter>(ControlledPawn))
         {
@@ -177,6 +160,6 @@ void AMyPlayerController::Attack(const FInputActionValue& Value)
         {
             MyCharacter_ZD->Attack();
         }
-    }
+    }*/
 }
 

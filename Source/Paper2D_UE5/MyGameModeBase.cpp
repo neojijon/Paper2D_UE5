@@ -22,19 +22,23 @@ AMyGameModeBase::AMyGameModeBase()
 	}*/
 
 		
-	static ConstructorHelpers::FClassFinder<APlayerController> ControllClass(TEXT("/Game/Paper2D/BP_MyPlayerController"));
+	/*static ConstructorHelpers::FClassFinder<APlayerController> ControllClass(TEXT("/Game/Paper2D/BP_MyPlayerController"));
 
 	if (ControllClass.Class != nullptr)
 	{
 		PlayerControllerClass = ControllClass.Class;
-	}
+	}*/
 
 	//일반 C++ 클래스를  세팅하는 방법
 	//DefaultPawnClass = AMyPaperCharacter::StaticClass();
+    //DefaultPawnClass = PlayerPawnBPClass.Class;
     // 
-	//PlayerControllerClass = AMyPlayerController::StaticClass();
+    //PlayerControllerClass = AMyPlayerController::StaticClass();
 
-    DefaultPawnClass = SelectedCharacterClass;
+    //DefaultPawnClass = SelectedCharacterClass;
+
+    
+    SelectedCharacterClass = DefaultPawnClass;
 }
 
 void AMyGameModeBase::BeginPlay()
